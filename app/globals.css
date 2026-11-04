@@ -1,0 +1,242 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: #070b10;
+  --surface: #0f1620;
+  --signal: #ff7a1a;
+  --cyan: #38bdf8;
+  --steel: #94a3b8;
+  --text: #eaf0f7;
+  --muted: #8593a6;
+  --line: rgba(255, 255, 255, 0.1);
+  --line-soft: rgba(255, 255, 255, 0.06);
+  --expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --quart: cubic-bezier(0.76, 0, 0.24, 1);
+
+  --fs-hero: clamp(4.25rem, 12.4vw, 18rem);
+  --fs-h1: clamp(3rem, 8vw, 8rem);
+  --fs-h2: clamp(2.4rem, 5.4vw, 5.5rem);
+  --fs-h3: clamp(1.5rem, 2.5vw, 2.4rem);
+  --gutter: clamp(16px, 4vw, 64px);
+  --nav-h: 72px;
+  --section: clamp(96px, 20vh, 240px);
+}
+
+html {
+  background: var(--bg);
+  color-scheme: dark;
+  -webkit-text-size-adjust: 100%;
+}
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-stopped {
+  overflow: clip;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-text), system-ui, sans-serif;
+  font-size: clamp(16px, 0.35vw + 15px, 18px);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: clip;
+}
+
+::selection {
+  background: var(--signal);
+  color: #0a0a0a;
+}
+
+/* ---------- Type ---------- */
+.display {
+  font-family: var(--font-display), Georgia, serif;
+  font-weight: 400;
+  letter-spacing: -0.04em;
+  line-height: 0.92;
+}
+.display em,
+.emph {
+  font-style: italic;
+  color: var(--signal);
+  letter-spacing: -0.03em;
+}
+.t-hero { font-size: var(--fs-hero); letter-spacing: -0.055em; line-height: 0.86; }
+.t-h1 { font-size: var(--fs-h1); }
+.t-h2 { font-size: var(--fs-h2); }
+.t-h3 { font-size: var(--fs-h3); line-height: 1; letter-spacing: -0.025em; }
+
+.label {
+  font-size: 11.5px;
+  line-height: 1.3;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+.label-ink { color: var(--text); }
+.prose-body { max-width: 62ch; color: #c3cdda; }
+.tnum { font-variant-numeric: tabular-nums; }
+
+.rule { height: 1px; background: var(--line); width: 100%; }
+.pad-section { padding-block: var(--section); }
+.px-page { padding-inline: var(--gutter); }
+.wrap { width: 100%; max-width: 1840px; margin-inline: auto; padding-inline: var(--gutter); }
+
+/* ---------- Surfaces ---------- */
+.glass {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.015));
+  border: 1px solid var(--line);
+  backdrop-filter: blur(18px) saturate(1.3);
+  -webkit-backdrop-filter: blur(18px) saturate(1.3);
+}
+.scrim-x {
+  background: linear-gradient(90deg, rgba(7, 11, 16, 0.92) 0%, rgba(7, 11, 16, 0.7) 45%, rgba(7, 11, 16, 0) 85%);
+}
+.panel-bg {
+  background: radial-gradient(120% 90% at 0% 0%, rgba(255, 122, 26, 0.09), transparent 55%),
+    radial-gradient(90% 80% at 100% 100%, rgba(56, 189, 248, 0.08), transparent 60%), var(--surface);
+}
+
+/* ---------- Hover underline ---------- */
+.u-draw {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 0% 1px;
+  background-position: 100% 100%;
+  background-repeat: no-repeat;
+  transition: background-size 0.6s var(--expo);
+}
+.u-draw:hover,
+.u-draw:focus-visible {
+  background-size: 100% 1px;
+  background-position: 0% 100%;
+}
+
+/* ---------- Focus ---------- */
+:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+.skip-link {
+  position: fixed;
+  left: 16px;
+  top: -80px;
+  z-index: 200;
+  background: var(--signal);
+  color: #0a0a0a;
+  padding: 10px 16px;
+  font-weight: 600;
+  transition: top 0.3s var(--expo);
+}
+.skip-link:focus { top: 16px; }
+
+/* ---------- Mask reveal ---------- */
+.mask { display: inline-block; overflow: hidden; vertical-align: top; padding-bottom: 0.12em; margin-bottom: -0.12em; }
+.mask > .mask-in { display: inline-block; will-change: transform; }
+[data-split] { visibility: hidden; }
+html[data-ready] [data-split],
+html[data-split-fallback] [data-split] { visibility: visible; }
+
+/* ---------- Preloader / seen ---------- */
+html[data-seen] #preloader { display: none; }
+
+/* ---------- View transitions ---------- */
+@media (prefers-reduced-motion: no-preference) {
+  ::view-transition-old(root) { animation: none; mix-blend-mode: normal; }
+  ::view-transition-new(root) {
+    mix-blend-mode: normal;
+    animation: vt-wipe 1.05s var(--quart) both;
+  }
+  ::view-transition-group(shared) { animation-duration: 1.05s; animation-timing-function: var(--quart); }
+  ::view-transition-old(shared),
+  ::view-transition-new(shared) { mix-blend-mode: normal; height: 100%; object-fit: cover; }
+}
+@keyframes vt-wipe {
+  from { clip-path: inset(100% 0 0 0); }
+  to { clip-path: inset(0 0 0 0); }
+}
+
+/* ---------- Cursor ---------- */
+@media (hover: hover) and (pointer: fine) {
+  html.has-cursor, html.has-cursor a, html.has-cursor button, html.has-cursor [role='button'],
+  html.has-cursor input, html.has-cursor select, html.has-cursor textarea, html.has-cursor label { cursor: none; }
+}
+
+/* ---------- Misc ---------- */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { scrollbar-width: none; }
+input, select, textarea, button { font: inherit; color: inherit; }
+select option { background: var(--surface); color: var(--text); }
+
+@keyframes eq {
+  0%, 100% { transform: scaleY(0.25); }
+  50% { transform: scaleY(1); }
+}
+@keyframes blink { 50% { opacity: 0; } }
+@keyframes shimmer {
+  from { background-position: -200% 0; }
+  to { background-position: 200% 0; }
+}
+.skeleton {
+  background: linear-gradient(90deg, rgba(255,255,255,0.04) 20%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0.04) 80%);
+  background-size: 200% 100%;
+  animation: shimmer 1.6s linear infinite;
+  border-radius: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  [data-split] { visibility: visible; }
+}
+
+/* grain jitter */
+@keyframes grain {
+  0% { transform: translate(0, 0); } 20% { transform: translate(-3%, 2%); } 40% { transform: translate(2%, -3%); }
+  60% { transform: translate(-2%, -1%); } 80% { transform: translate(3%, 3%); } 100% { transform: translate(0, 0); }
+}
+.grain { animation: grain 0.9s steps(1) infinite; }
+
+/* logo draw (preloader) */
+.logo-arc, .logo-base { stroke-dasharray: 80; stroke-dashoffset: 80; animation: draw 1.1s var(--expo) 0.15s forwards; }
+.logo-base { animation-delay: 0.5s; stroke-dasharray: 30; stroke-dashoffset: 30; }
+.logo-dot { opacity: 0; transform-origin: 41px 12px; animation: pop 0.6s var(--expo) 1s forwards; }
+@keyframes draw { to { stroke-dashoffset: 0; } }
+@keyframes pop { from { opacity: 0; transform: scale(0); } to { opacity: 1; transform: scale(1); } }
+
+/* first visit: hide page until the preloader hands off */
+html:not([data-ready]) main, html:not([data-ready]) header[data-nav] { opacity: 0; }
+html[data-ready] main, html[data-ready] header[data-nav] { opacity: 1; transition: opacity 0.01s; }
+
+/* ---------- 3D-first surfaces: the world must always show through ---------- */
+.veil-soft {
+  background: linear-gradient(180deg, rgba(7, 11, 16, 0) 0%, rgba(7, 11, 16, 0.5) 14%, rgba(7, 11, 16, 0.5) 86%, rgba(7, 11, 16, 0) 100%);
+}
+.veil {
+  background: rgba(7, 11, 16, 0.5);
+  backdrop-filter: blur(8px) saturate(1.15);
+  -webkit-backdrop-filter: blur(8px) saturate(1.15);
+}
+.panel {
+  background: linear-gradient(160deg, rgba(15, 22, 32, 0.78), rgba(7, 11, 16, 0.62));
+  border: 1px solid var(--line);
+  backdrop-filter: blur(16px) saturate(1.3);
+  -webkit-backdrop-filter: blur(16px) saturate(1.3);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 40px 100px -40px rgba(0, 0, 0, 0.8);
+}
+.shadow-text { text-shadow: 0 1px 24px rgba(7, 11, 16, 0.95), 0 0 2px rgba(7, 11, 16, 0.6); }
+.beat { position: relative; display: flex; min-height: 100svh; align-items: center; padding-block: 12vh; }
