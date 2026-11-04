@@ -12,12 +12,13 @@ import { getContainerKit } from './models/containerKit';
 /** The one persistent <Canvas>. Lives in the root layout; routes only change store state. */
 export default function SceneCanvas() {
   const [mobile, setMobile] = useState(false);
-  const [dpr, setDpr] = useState<[number, number]>([1, 2]);
+  const [dpr, setDpr] = useState<[number, number]>([1, 1.5]);
   const setQuality = useStore((s) => s.setQuality);
 
   useEffect(() => {
     const m = window.innerWidth < 768 || /Mobi|Android/i.test(navigator.userAgent);
     setMobile(m);
+    if ((navigator.hardwareConcurrency ?? 8) <= 4) setQuality(1);
     if (m) {
       setQuality(1);
       setDpr([1, 1.5]);
@@ -38,7 +39,7 @@ export default function SceneCanvas() {
   return (
     <Canvas
       dpr={dpr}
-      shadows="soft"
+      shadows="percentage"
       frameloop="always"
       camera={{ position: [0, 0.2, 6.2], fov: 36, near: 0.1, far: 800 }}
       gl={{ antialias: false, alpha: true, powerPreference: 'high-performance', stencil: false, depth: true }}
@@ -55,7 +56,7 @@ export default function SceneCanvas() {
         onDecline={() => {
           const q = useStore.getState().quality;
           if (q > 0) setQuality((q - 1) as 0 | 1 | 2);
-          setDpr(([a]) => [a, Math.max(1, 1.25)]);
+          setDpr([1, 1.15]);
         }}
         onFallback={() => setQuality(0)}
         bounds={() => [50, 100]}

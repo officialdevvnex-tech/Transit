@@ -53,7 +53,7 @@ export function SharedLights() {
     <>
       <ambientLight intensity={0.55} />
       <primitive object={target} />
-      <directionalLight ref={dir} target={target} position={[-4, 5, 6]} intensity={1.4} color="#dfeaff" castShadow shadow-mapSize={[2048, 2048]} shadow-bias={-0.0004} shadow-normalBias={0.04} shadow-camera-near={1} shadow-camera-far={140} shadow-camera-left={-45} shadow-camera-right={45} shadow-camera-top={45} shadow-camera-bottom={-45} />
+      <directionalLight ref={dir} target={target} position={[-4, 5, 6]} intensity={1.4} color="#dfeaff" castShadow shadow-mapSize={[1536, 1536]} shadow-bias={-0.0004} shadow-normalBias={0.04} shadow-camera-near={1} shadow-camera-far={140} shadow-camera-left={-45} shadow-camera-right={45} shadow-camera-top={45} shadow-camera-bottom={-45} />
       {pts.map((r, i) => (
         <pointLight key={i} ref={r} position={[0, 0, 0]} intensity={0} distance={30} decay={2} />
       ))}

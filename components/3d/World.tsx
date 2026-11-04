@@ -30,7 +30,7 @@ export function World({ mobile }: { mobile: boolean }) {
         <DriftScene />
         <Title3D />
       </Suspense>
-      <Dust count={mobile ? 900 : 2800} />
+      <Dust count={mobile ? 700 : 1800} />
       <Post mobile={mobile} />
     </>
   );

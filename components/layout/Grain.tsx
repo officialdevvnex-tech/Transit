@@ -6,7 +6,7 @@ export function Grain() {
   return (
     <div
       aria-hidden
-      className="grain pointer-events-none fixed inset-[-50%] z-[80] opacity-[0.05] mix-blend-screen"
+      className="grain pointer-events-none fixed inset-0 z-[80] opacity-[0.04]"
       style={{ backgroundImage: `url("data:image/svg+xml,${svg}")` }}
     />
   );
